@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Seed Judge AC-1",
+    "affiliation": "Placeholder Safety Lab",
+    "relevance_signal": "seed placeholder: control protocols for untrusted models (regenerate with MODE=live)",
+    "contact": {"type": "profile_page", "value": "https://example.org/people/ac-1", "verified": false},
+    "source_urls": ["https://example.org/people/ac-1"],
+    "evidence_snippet": "seed placeholder evidence",
+    "rank": 1
+  },
+  {
+    "name": "Seed Judge AC-2",
+    "affiliation": "Placeholder University",
+    "relevance_signal": "seed placeholder: red-teaming AI control setups (regenerate with MODE=live)",
+    "contact": {"type": "linkedin", "value": "https://linkedin.com/in/example-ac-2", "verified": false},
+    "source_urls": ["https://example.org/people/ac-2"],
+    "evidence_snippet": "seed placeholder evidence",
+    "rank": 2
+  },
+  {
+    "name": "Seed Judge AC-3",
+    "affiliation": "Placeholder Institute",
+    "relevance_signal": "seed placeholder: evaluation of control techniques (regenerate with MODE=live)",
+    "contact": {"type": "unknown", "value": "", "verified": false},
+    "source_urls": ["https://example.org/people/ac-3"],
+    "evidence_snippet": "seed placeholder evidence",
+    "rank": 3
+  }
+]

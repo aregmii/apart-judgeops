@@ -1,0 +1,13 @@
+{
+  "id": "ai_control",
+  "topic": "AI Control",
+  "description": "AI safety hackathon on AI control: monitoring, containment, and safe deployment protocols for untrusted AI systems.",
+  "tracks": [
+    "Control protocols and monitoring for untrusted models",
+    "Red-teaming control setups",
+    "Evaluation of control techniques"
+  ],
+  "dates": "2026-08-21 to 2026-08-23",
+  "judge_count": 20,
+  "rubric_path": "prompts/rubric.md"
+}

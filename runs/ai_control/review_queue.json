@@ -1,0 +1,102 @@
+[
+  {
+    "project_id": "ac-proj-1",
+    "scores": {
+      "impact_innovation": 4,
+      "execution_quality": 3,
+      "presentation_clarity": 4
+    },
+    "rationale": {
+      "impact_innovation": {
+        "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+        "evidence_quotes": []
+      },
+      "execution_quality": {
+        "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+        "evidence_quotes": []
+      },
+      "presentation_clarity": {
+        "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+        "evidence_quotes": []
+      }
+    },
+    "off_topic": false,
+    "confidence": 0.693,
+    "agreement_flag": false,
+    "human_review_required": true,
+    "model": "cached-stub",
+    "prompt_version": "judge_v1",
+    "samples_raw": [
+      {
+        "scores": {
+          "impact_innovation": 3,
+          "execution_quality": 3,
+          "presentation_clarity": 3
+        },
+        "rationale": {
+          "impact_innovation": {
+            "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+            "evidence_quotes": []
+          },
+          "execution_quality": {
+            "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+            "evidence_quotes": []
+          },
+          "presentation_clarity": {
+            "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+            "evidence_quotes": []
+          }
+        },
+        "off_topic": false,
+        "confidence": 0.62
+      },
+      {
+        "scores": {
+          "impact_innovation": 4,
+          "execution_quality": 4,
+          "presentation_clarity": 4
+        },
+        "rationale": {
+          "impact_innovation": {
+            "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+            "evidence_quotes": []
+          },
+          "execution_quality": {
+            "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+            "evidence_quotes": []
+          },
+          "presentation_clarity": {
+            "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+            "evidence_quotes": []
+          }
+        },
+        "off_topic": false,
+        "confidence": 0.8
+      },
+      {
+        "scores": {
+          "impact_innovation": 4,
+          "execution_quality": 3,
+          "presentation_clarity": 4
+        },
+        "rationale": {
+          "impact_innovation": {
+            "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+            "evidence_quotes": []
+          },
+          "execution_quality": {
+            "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+            "evidence_quotes": []
+          },
+          "presentation_clarity": {
+            "text": "Cached-mode stub rationale; run MODE=live for a real LLM grade.",
+            "evidence_quotes": []
+          }
+        },
+        "off_topic": false,
+        "confidence": 0.6599999999999999
+      }
+    ],
+    "token_usage": {}
+  }
+]

@@ -1,0 +1,4 @@
+rank,name,affiliation,relevance_signal,contact_type,contact_value,contact_verified,source_urls,evidence_snippet
+1,Seed Judge AC-1,Placeholder Safety Lab,seed placeholder: control protocols for untrusted models (regenerate with MODE=live),profile_page,https://example.org/people/ac-1,False,https://example.org/people/ac-1,seed placeholder evidence
+2,Seed Judge AC-2,Placeholder University,seed placeholder: red-teaming AI control setups (regenerate with MODE=live),linkedin,https://linkedin.com/in/example-ac-2,False,https://example.org/people/ac-2,seed placeholder evidence
+3,Seed Judge AC-3,Placeholder Institute,seed placeholder: evaluation of control techniques (regenerate with MODE=live),unknown,,False,https://example.org/people/ac-3,seed placeholder evidence

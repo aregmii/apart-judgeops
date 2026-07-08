@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ac-proj-1",
+    "event_id": "ai_control",
+    "title": "Trusted Monitoring with Cheap Paraphrase Ensembles",
+    "team": "Team Placeholder Gamma",
+    "track": "Control protocols and monitoring for untrusted models",
+    "content": "## Problem\n\nSeed placeholder project. Trusted monitors are expensive; we test whether paraphrase ensembles of a small trusted model catch backdoored code as well as a single large monitor.\n\n## Method\n\nWe reproduce a subset of the control-evaluations setting with 150 code tasks and compare monitor configurations.\n\n## Results\n\nThe ensemble recovers 85% of the large monitor's catch rate at 20% of the cost.\n\n## Limitations\n\nSingle task family; no adaptive attacker. Replace with a real AI Control entry snapshot.",
+    "source_url": "https://example.org/projects/ac-proj-1"
+  },
+  {
+    "id": "ac-proj-2",
+    "event_id": "ai_control",
+    "title": "Red-Teaming Resampling Protocols with Steganographic Signals",
+    "team": "Team Placeholder Delta",
+    "track": "Red-teaming control setups",
+    "content": "## Problem\n\nSeed placeholder project. Resampling protocols assume independent samples; we test whether an untrusted model can coordinate across resamples via steganographic signals.\n\n## Method\n\nWe fine-tune a small model to embed and detect signals in code comments, then measure attack success under a resampling defense.\n\n## Results\n\nCoordination survives naive resampling but collapses under comment stripping.\n\n## Limitations\n\nToy setting, small model. Replace with a real AI Control entry snapshot.",
+    "source_url": "https://example.org/projects/ac-proj-2"
+  }
+]

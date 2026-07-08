@@ -1,0 +1,20 @@
+[
+  {
+    "id": "dm-proj-1",
+    "event_id": "digital_minds",
+    "title": "Probing Self-Report Consistency in LLMs",
+    "team": "Team Placeholder Alpha",
+    "track": "Consciousness and moral status of AI systems",
+    "content": "## Problem\n\nSeed placeholder project. We test whether LLM self-reports about internal states are consistent under paraphrase and adversarial reframing.\n\n## Method\n\nWe built a battery of 200 paraphrased introspection prompts and measured answer consistency across three models.\n\n## Results\n\nConsistency varies widely by model and prompt framing; we release the battery and scoring script.\n\n## Limitations\n\nWeekend-scale; no human baseline. Replace with a real submission snapshot.",
+    "source_url": "https://example.org/projects/dm-proj-1"
+  },
+  {
+    "id": "dm-proj-2",
+    "event_id": "digital_minds",
+    "title": "A Minimal Welfare Evaluation Checklist for Deployed Agents",
+    "team": "Team Placeholder Beta",
+    "track": "AI welfare evaluation methods",
+    "content": "## Problem\n\nSeed placeholder project. There is no lightweight checklist for flagging welfare-relevant states in deployed agentic systems.\n\n## Method\n\nWe adapted three published welfare frameworks into a 12-item checklist and applied it to two open-source agent frameworks.\n\n## Results\n\nThe checklist surfaced 4 candidate concerns; most items were inapplicable, suggesting the frameworks need agent-specific revision.\n\n## Limitations\n\nChecklist validity is untested. Replace with a real submission snapshot.",
+    "source_url": "https://example.org/projects/dm-proj-2"
+  }
+]

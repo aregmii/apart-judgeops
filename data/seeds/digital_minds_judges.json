@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Seed Judge DM-1",
+    "affiliation": "Placeholder Research Lab",
+    "relevance_signal": "seed placeholder: published work on machine consciousness evaluation (regenerate with MODE=live)",
+    "contact": {"type": "profile_page", "value": "https://example.org/people/dm-1", "verified": false},
+    "source_urls": ["https://example.org/people/dm-1"],
+    "evidence_snippet": "seed placeholder evidence",
+    "rank": 1
+  },
+  {
+    "name": "Seed Judge DM-2",
+    "affiliation": "Placeholder University",
+    "relevance_signal": "seed placeholder: research on moral status of AI systems (regenerate with MODE=live)",
+    "contact": {"type": "linkedin", "value": "https://linkedin.com/in/example-dm-2", "verified": false},
+    "source_urls": ["https://example.org/people/dm-2"],
+    "evidence_snippet": "seed placeholder evidence",
+    "rank": 2
+  },
+  {
+    "name": "Seed Judge DM-3",
+    "affiliation": "Placeholder Institute",
+    "relevance_signal": "seed placeholder: AI welfare evaluation methods (regenerate with MODE=live)",
+    "contact": {"type": "public_email", "value": "dm3@example.org", "verified": false},
+    "source_urls": ["https://example.org/people/dm-3"],
+    "evidence_snippet": "Contact: dm3@example.org (as listed on the placeholder profile page)",
+    "rank": 3
+  },
+  {
+    "name": "Seed Judge DM-4",
+    "affiliation": "Placeholder Policy Center",
+    "relevance_signal": "seed placeholder: governance frameworks for digital minds (regenerate with MODE=live)",
+    "contact": {"type": "webform", "value": "https://example.org/contact", "verified": false},
+    "source_urls": ["https://example.org/people/dm-4"],
+    "evidence_snippet": "seed placeholder evidence",
+    "rank": 4
+  }
+]

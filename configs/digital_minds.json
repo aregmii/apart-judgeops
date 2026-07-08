@@ -1,0 +1,13 @@
+{
+  "id": "digital_minds",
+  "topic": "Digital Minds",
+  "description": "AI safety hackathon on digital minds: machine consciousness, moral status of AI systems, and AI welfare.",
+  "tracks": [
+    "Consciousness and moral status of AI systems",
+    "AI welfare evaluation methods",
+    "Policy and governance for digital minds"
+  ],
+  "dates": "2026-07-24 to 2026-07-26",
+  "judge_count": 20,
+  "rubric_path": "prompts/rubric.md"
+}

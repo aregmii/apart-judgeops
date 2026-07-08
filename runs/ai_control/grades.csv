@@ -1,0 +1,3 @@
+project_id,impact_innovation,execution_quality,presentation_clarity,off_topic,confidence,agreement_flag,human_review_required,model,prompt_version
+ac-proj-1,4,3,4,False,0.693,False,True,cached-stub,judge_v1
+ac-proj-2,2,3,3,False,0.723,False,False,cached-stub,judge_v1

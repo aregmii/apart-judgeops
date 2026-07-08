@@ -1,0 +1,5 @@
+rank,name,affiliation,relevance_signal,contact_type,contact_value,contact_verified,source_urls,evidence_snippet
+1,Seed Judge DM-1,Placeholder Research Lab,seed placeholder: published work on machine consciousness evaluation (regenerate with MODE=live),profile_page,https://example.org/people/dm-1,False,https://example.org/people/dm-1,seed placeholder evidence
+2,Seed Judge DM-2,Placeholder University,seed placeholder: research on moral status of AI systems (regenerate with MODE=live),linkedin,https://linkedin.com/in/example-dm-2,False,https://example.org/people/dm-2,seed placeholder evidence
+3,Seed Judge DM-3,Placeholder Institute,seed placeholder: AI welfare evaluation methods (regenerate with MODE=live),public_email,dm3@example.org,False,https://example.org/people/dm-3,Contact: dm3@example.org (as listed on the placeholder profile page)
+4,Seed Judge DM-4,Placeholder Policy Center,seed placeholder: governance frameworks for digital minds (regenerate with MODE=live),webform,https://example.org/contact,False,https://example.org/people/dm-4,seed placeholder evidence
