@@ -1,59 +1,130 @@
 # apart-judgeops
 
-Judge sourcing + LLM-judge grading pipeline for Apart Research hackathons. One workflow with four steps (source judges, draft outreach, accept projects, grade against the rubric), driven entirely by a hackathon config file: a new hackathon topic is a new `configs/<id>.json`, zero new code. All state between steps is committed JSON under `runs/<id>/`, so the outputs are auditable and reviewable in the repo itself.
+A Python prototype for sourcing judges, drafting outreach, and grading projects for Apart Research hackathons. It brings candidate research and submission review into one configurable workflow, with files that an organizer can inspect before taking action.
 
-```
-create_hackathon_workflow(configs/<id>.json)
-  ├─ 1. source_judges     LLM + Anthropic web_search → runs/<id>/judges.json (+ judges.csv)
-  ├─ 2. contact_judges    LLM → runs/<id>/outreach/<judge>.md   (send() = TODO stub)
-  ├─ 3. accept_projects   seeds → runs/<id>/projects.json       (TODO: real importer)
-  └─ 4. grade_projects    LLM judge × rubric → runs/<id>/grades.json + review_queue.json
-```
+## Overview
 
-## Quickstart with zero keys
+The repository includes example configurations for Digital Minds and AI Control, synthetic seed data, and a demonstration that runs without API credentials. An optional live mode uses Anthropic for judge research, outreach drafts, and project grading.
 
-```bash
-make setup   # uv sync
-make test    # pytest, no network, no env vars
-make demo    # full workflow for both configs in MODE=cached (replays seeds/artifacts)
-```
+**Status:** prototype. Outreach is saved as drafts; email delivery is not implemented. Project intake reads local seed files in both modes. Included grades are labeled `cached-stub` and demonstrate the workflow, not the quality of an AI judge. The repository does not establish performance against human reviewers or provide a deployed service.
 
-## Live mode
+## Workflow
 
-```bash
-cp .env.example .env   # set ANTHROPIC_API_KEY
-export ANTHROPIC_API_KEY=sk-ant-...
-make generate          # MODE=live: real web search sourcing + real LLM grading
-```
+| Step | Current behavior | Output under `runs/<id>/` |
+| --- | --- | --- |
+| `source` | Reuse saved judges or seeds in cached mode; research candidates with Anthropic web search in live mode. Deduplicate names and assign ranks in returned order. | `judges.json`, `judges.csv` |
+| `contact` | Draft outreach for the first candidates in the saved list. No messages are sent. | `outreach/*.md` |
+| `accept` | Load projects from `data/seeds/<id>_projects.json`. | `projects.json` |
+| `grade` | Sample projects, generate repeated grades, aggregate scores, and flag cases for human review. Cached mode generates deterministic stubs. | `grades.json`, `review_queue.json` |
 
-CLI directly:
+JSON retains nested evidence, rationales, and individual grading samples. CSV exports provide a flatter view for inspection. Commands write to the same event directory on each run and can replace existing artifacts; they do not create Git commits or a separate run history.
+
+## Getting started
+
+Requirements: Python 3.12 or later, [uv](https://docs.astral.sh/uv/), and `make` for the convenience commands below. Run commands from the repository root.
 
 ```bash
-uv run judgeops run configs/digital_minds.json --steps source,contact
-uv run judgeops run configs/ai_control.json --steps source,accept,grade --sample 4 --seed 42
+git clone https://github.com/aregmii/apart-judgeops.git
+cd apart-judgeops
+make setup
+make test
+make demo
+```
+
+`make setup` installs dependencies. After setup, tests and the cached demonstration do not require model API access. `make demo` runs both included configurations and exports their grades to CSV, updating files under `runs/`.
+
+To run one event and inspect its results:
+
+```bash
+MODE=cached uv run judgeops run configs/ai_control.json
 uv run judgeops review-queue ai_control
 uv run judgeops export ai_control --csv
 ```
 
-## Design
+To run selected steps:
 
-JSON is the canonical format because judges and grades are nested (contacts with evidence, per-dimension rationales with quotes, raw samples); CSV is a lossy projection generated on demand (`judges.csv`, `export --csv`). `app/llm.py` is the only module that touches the Anthropic API; prompts are versioned files in `prompts/` with trivial `{placeholder}` templating, so tuning the judge means editing `prompts/judge_v1.md` and re-running step 4.
+```bash
+MODE=cached uv run judgeops run configs/digital_minds.json --steps source,contact --top-k 3
+MODE=cached uv run judgeops run configs/ai_control.json --steps accept,grade --sample 4 --seed 42 --k 3
+```
 
-## Assumptions & judgment calls
+`contact` requires a saved `judges.json`. `grade` uses saved projects when available and otherwise loads the project seeds. The included events each have two seed projects, so `--sample 4` grades both.
 
-- Seed judges/projects are clearly labeled placeholders, never fabricated real people. The contact policy is enforced by a Pydantic validator: a `public_email` without source URLs and an evidence snippet fails validation.
-- `MODE=cached` grade samples are deterministic stubs stamped `model=cached-stub`, so the keyless demo exercises the full aggregation/routing path honestly.
-- Median aggregation uses `median_high` to keep scores integral for even sample counts; `off_topic` aggregates by majority vote.
-- Email sending is a `NotImplementedError` stub behind a future `EmailProvider` interface.
+## Live mode
 
-## Judge reliability
+Copy the environment example:
 
-Implemented: k=3 independent samples with per-dimension median, disagreement flag when any dimension's range exceeds 1, evidence quotes required per rationale, team-name anonymization before judging, calibration anchors in the prompt (3 = solid weekend work, 5 = top ~5-10%), and review routing (`confidence < 0.7`, any score of 5, off-topic, or disagreement → human review queue, sorted by confidence ascending). Noted as TODOs in `app/steps/grade_projects.py`: pairwise tournament for top-k, position-bias swap tests, calibration against past winners/human scores, cross-model ensemble.
+```bash
+cp .env.example .env
+```
 
-## Infrastructure
+Set `ANTHROPIC_API_KEY`, `SENDER_NAME`, and `MODE=live` in `.env`, then run:
 
-"Not one person's laptop" here means: containerized (Dockerfile), CI on every push (ruff + pytest), env-only configuration (`.env.example`), and committed auditable run artifacts. Production path: ECS/Cloud Run for the workflow, Postgres for judges/grades, S3 for submission snapshots, a queue for grading fan-out, and a small review UI over `review_queue.json`.
+```bash
+uv run --env-file .env judgeops run configs/digital_minds.json
+```
 
-## Cost note
+The application reads process environment variables; it does not load `.env` itself. `--env-file .env` tells uv to load the file. `MODEL` defaults to `claude-sonnet-4-6` in the code and can be changed to a compatible model available to your Anthropic account.
 
-Live sourcing uses Anthropic's server-side [web search tool](https://docs.claude.com/en/docs/agents-and-tools/tool-use/web-search-tool) at $10 per 1,000 searches plus tokens; each sourcing run caps at 8 searches.
+Live sourcing uses web search, outreach uses generated drafts, and grading makes `k` model requests per sampled project before any retries. Project intake still reads local seeds, and no email is sent. The source URLs, contact evidence, and grades need review before operational use.
+
+Live calls incur Anthropic API charges. Web search is configured for up to eight uses per request; retries or JSON repair can issue additional requests. This is not a total run budget.
+
+## Configuration
+
+Event files in [`configs/`](configs/) define `id`, `topic`, `description`, `tracks`, `dates`, and `rubric_path`. Dates in the included files are example event metadata, not a maintained schedule. The rubric path is resolved relative to the repository root.
+
+Workflow controls are CLI options:
+
+| Option | Default | Purpose |
+| --- | --- | --- |
+| `--steps` | `source,contact,accept,grade` | Steps to run, in the supplied order. |
+| `--n` | `20` | Maximum number of sourced judges retained. |
+| `--top-k` | `3` | Number of outreach drafts to create. |
+| `--sample` | `4` | Maximum number of projects to grade. |
+| `--seed` | `42` | Seed for project selection. |
+| `--k` | `3` | Number of grading samples per project. |
+
+The configuration's `judge_count` field is currently not used by the workflow; use `--n` to control the count. Use positive values for the count options. `--seed` controls project selection, not live model responses.
+
+To add an event, create a configuration and a matching `data/seeds/<id>_projects.json` using the existing project files as the schema example. For cached judge sourcing, also supply `data/seeds/<id>_judges.json` or an existing `runs/<id>/judges.json`. Review the shared rubric and sourcing prompts for the new topic. A new configuration alone does not supply submissions or cached judges.
+
+## Grading and review limits
+
+The grader uses three dimensions: impact and innovation, execution quality, and presentation clarity. It takes three samples by default, aggregates each score using the upper median, averages model-reported confidence, and uses a majority vote for off-topic status.
+
+A grade enters the review queue when confidence is below `0.7`, any aggregate score is `5`, the project is off topic, or samples differ by more than one point on a dimension. The queue is sorted by confidence, lowest first. This is a routing rule, not evidence that the confidence values are calibrated.
+
+Current safeguards have specific limits:
+
+- The prompt asks for scores from 1 to 5 and quotes supporting each rationale. The schema does not enforce that score range or require nonempty evidence quotes.
+- Public email records must include source URLs and an evidence snippet. Validation checks their presence; it does not independently verify the address against the source.
+- Anonymization replaces exact matches of the supplied team name in submission content. It does not remove all author identifiers.
+- The saved rationale comes from the first sample, while the displayed scores aggregate all samples.
+
+Email delivery, external submission imports, evaluation against human scores, broader anonymization, bias tests, and comparisons across models remain future work. A review interface and hosted infrastructure are not included.
+
+## Development
+
+```bash
+make lint
+make test
+uv run judgeops --help
+uv run judgeops run --help
+```
+
+CI runs Ruff and pytest on pushes and pull requests. Existing tests cover model validation, email evidence requirements, deterministic project sampling, score aggregation, review routing, and the cached workflow. They do not validate live API behavior or grading accuracy. A [`Dockerfile`](Dockerfile) is included for packaging the CLI; no hosting configuration is provided.
+
+| Location | Purpose |
+| --- | --- |
+| [`app/cli.py`](app/cli.py), [`app/workflow.py`](app/workflow.py) | CLI and step orchestration. |
+| [`app/steps/`](app/steps/) | Sourcing, outreach, intake, and grading. |
+| [`app/llm.py`](app/llm.py) | Anthropic calls, prompt rendering, validation repair, and retries. |
+| [`app/models.py`](app/models.py) | Event, judge, project, and grade schemas. |
+| [`configs/`](configs/), [`prompts/`](prompts/) | Event inputs, shared rubric, and prompt versions. |
+| [`data/seeds/`](data/seeds/), [`runs/`](runs/) | Synthetic inputs and saved demonstration outputs. |
+| [`tests/`](tests/) | Offline unit and workflow tests. |
+
+## License
+
+No license file is included in this repository.
